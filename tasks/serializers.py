@@ -45,14 +45,6 @@ class TaskSerializer(serializers.ModelSerializer):
                     
         return attrs
 
-
-    def perform_destroy(self, instance):
-        if instance.status in ['in_progress', 'review']:
-            raise ValidationError(
-                {"detail": "Не можна видаляти задачі в статусі In Progress або Review."}
-            )
-        instance.delete()
-
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment

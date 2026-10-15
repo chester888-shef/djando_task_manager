@@ -38,6 +38,12 @@ class TaskViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    def perform_destroy(self, instance):
+        if instance.status in ['in_progress', 'review']:
+            raise ValidationError(
+                {"detail": "Не можна видаляти задачі в статусі In Progress або Review."}
+            )
+        instance.delete()
 
     @extend_schema(request=CommentSerializer, responses=CommentSerializer)
     @action(detail=True, methods=["get", "post"], url_path="comments")

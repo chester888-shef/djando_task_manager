@@ -40,4 +40,4 @@ class Comment(models.Model):
     text = models.TextField()
     created_at= models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return f"Comment {self.pk} on task {self.task_id}"
+        return f"Comment {self.pk} on task {self.task.name}"
